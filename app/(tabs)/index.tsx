@@ -5,6 +5,10 @@ import Button from "@/components/Button";
 import ImageViewer from "@/components/ImageViewer";
 import * as ImagePicker from 'expo-image-picker';
 import { useState } from "react";
+import IconButton from '@/components/IconButton'
+import CircleButton from '@/components/CircleButton'
+import EmojiPicker from '@/components/EmojiPicker';
+
 
 let PlaceholderImage = require('@/assets/images/background-image.png')
 
@@ -24,6 +28,8 @@ export default function Index() {
       console.log(result);
       console.log(`-------------------------------`);
       console.log('current selectedImage: ', selectedImage);
+      // set option to true;
+      setShowOptions(true);
       // PlaceholderImage = result;
       setImage(result.assets[0].uri);
     } else {
@@ -31,6 +37,17 @@ export default function Index() {
     }
   }
 
+  const onReset = () => {
+    setShowOptions(false);
+  }
+
+  const onAddSticker = () => {
+    // to be implemented later;
+  }
+
+  const onSaveImage = async() => {
+    // to be implemented later;
+  }
 
   return (
     <View
@@ -39,10 +56,20 @@ export default function Index() {
       <View style={styles.imageContainer}>
         <ImageViewer imgSource={selectedImage}/>
       </View>
-      <View style={styles.footherContainer}>
+      { showOptions ? ( 
+        <View style ={styles.optionsContainer} >
+          <View style = {styles.optionsRow} >
+            <IconButton icon="refresh" label="Reset" onPress={onReset} />
+            <CircleButton onPress={onAddSticker} />
+            <IconButton icon="save-alt" label="Save" onPress={onSaveImage} />
+          </View>
+        </View>
+      ) : (
+      <View style={styles.footerContainer}>
         <Button label={"Choose an Image"} icon={"image"} onPress={pickImageAsync}/>
-        <Button label={"Use this Image"}   />
-      </View>
+        <Button label={"Use this Image"} onPress={()=> {setShowOptions(true)}}   />
+      </View>)
+      }
     </View>
   );
 }
@@ -52,32 +79,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#25292e",
-    justifyContent: "center",
     alignItems: "center",
-  },
-  text: {
-    color: "#ffffff",
-    fontSize: 28
-  },
-  button: {
-    fontSize: 20, 
-    textDecorationLine: 'underline',
-    color: "#fff"
   },
   imageContainer: {
     flex: 1,
   },
-  footherContainer: {
+  footerContainer: {
     flex: 1 / 3,
     alignItems: 'center',
-    marginBottom: 'auto'
-
-  }
-  // image: {
-  //   width: 320, 
-  //   height: 440,
-  //   borderRadius: 18,
-  // }
-);
+  },
+  optionsContainer: {
+    position: 'absolute',
+    bottom: 80,
+  },
+  optionsRow: {
+    alignItems: 'center',
+    flexDirecton: 'row',
+  },
+});
 
 
