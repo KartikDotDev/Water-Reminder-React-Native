@@ -4,7 +4,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 type Props = {
   icon: keyof typeof MaterialIcons.glyphMap;
   label: string;
-  onPress: () => Promise<void>;
+  onPress: () => void;
 }
 
 export default function IconButton( {icon, label, onPress} : Props ) {

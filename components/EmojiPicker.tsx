@@ -5,6 +5,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 type Props = {
   isVisible: boolean;
   onClose: () => void;
+  children: React.ReactNode;
 }
 
 export default function EmojiPicker( {isVisible, children, onClose } : Props ) {
