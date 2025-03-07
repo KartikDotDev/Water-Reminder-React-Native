@@ -22,8 +22,8 @@ export default function Index() {
   );
   const [showAppOptions, setShowAppOptions] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const [pickedEmoji, setPickedEmoji] = useState<ImageSource | undefined>(
-    undefined
+  const [pickedEmojis, setPickedEmojis] = useState<ImageSource[]>(
+    []
   );
   
   const pickImageAsync = async () => {
@@ -41,15 +41,11 @@ export default function Index() {
     }
   };
 
-  useEffect(() => {
-    console.log(showAppOptions);
-    console.log(pickedEmoji);
-  }, [pickedEmoji, showAppOptions]);
-  
 
+  
   const onReset = () => {
     setShowAppOptions(false);
-    setPickedEmoji(undefined);
+    setPickedEmojis([]);
   };
 
   const onAddSticker = () => {
@@ -64,12 +60,16 @@ export default function Index() {
     // we will implement this later
   };
 
+  const addNewSticker = async (item : ImageSource) => {
+    setPickedEmojis([...pickedEmojis, item]);
+  }
+
   return (
     <GestureHandlerRootView style={styles.container}>
       <View style={styles.imageContainer}>
         <ImageViewer imgSource={selectedImage} />
       {/*<Image source={selectedImage} style={{ width: 320, height: 440, borderRadius: 18 }} /> */}
-      {pickedEmoji && <EmojiSticker imageSize={40} stickerSource={pickedEmoji} />}
+      {pickedEmojis?.length > 0 && pickedEmojis.map( (pickedEmoji, index) => <EmojiSticker key={index} imageSize={40} stickerSource={pickedEmoji} />) }
       </View>
       {showAppOptions ? (
         <View style={styles.optionsContainer}>
@@ -97,7 +97,7 @@ export default function Index() {
         </View>
       )}
       <EmojiPicker isVisible={isModalVisible} onClose={onModalClose}>
-        <EmojiList onSelect={setPickedEmoji} onCloseModal={onModalClose} />
+        <EmojiList onSelect={addNewSticker} onCloseModal={onModalClose} />
       </EmojiPicker>
     </GestureHandlerRootView>
   );
