@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { StyleSheet, FlatList, Platform, Pressable } from 'react-native';
-import { Image, type ImageSource } from 'expo-image';
+import { useState } from "react";
+import { StyleSheet, FlatList, Platform, Pressable } from "react-native";
+import { Image, type ImageSource } from "expo-image";
 
 type Props = {
   onSelect: (image: ImageSource) => void;
@@ -8,7 +8,7 @@ type Props = {
 };
 
 export default function EmojiList({ onSelect, onCloseModal }: Props) {
-  const [emojis] = useState<ImageSource[]>([
+  const [emoji] = useState<ImageSource[]>([
     require("../assets/images/emoji1.png"),
     require("../assets/images/emoji2.png"),
     require("../assets/images/emoji3.png"),
@@ -20,15 +20,16 @@ export default function EmojiList({ onSelect, onCloseModal }: Props) {
   return (
     <FlatList
       horizontal
-      showsHorizontalScrollIndicator={Platform.OS === 'web'}
-      data={emojis}
+      showsHorizontalScrollIndicator={Platform.OS === "web"}
+      data={emoji}
       contentContainerStyle={styles.listContainer}
       renderItem={({ item, index }) => (
         <Pressable
           onPress={() => {
             onSelect(item);
             onCloseModal();
-          }}>
+          }}
+        >
           <Image source={item} key={index} style={styles.image} />
         </Pressable>
       )}
@@ -41,9 +42,9 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
     paddingHorizontal: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   image: {
     width: 100,
@@ -51,4 +52,3 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
 });
-
